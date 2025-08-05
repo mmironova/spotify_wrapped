@@ -14,12 +14,7 @@ import pandas as pd
 import argparse
 from collections import Counter
 
-
-def info_by_artist(artist):
-    # TODO: make these params
-    directory="/Users/lauranosler/spotify_wrapped/Spotify_Account_Data/"
-
-
+def info_by_artist(artist, directory):
     # Use glob to find all matching JSON files
     file_pattern = f"{directory}/StreamingHistory_music_*.json"
     json_files = glob.glob(file_pattern)
@@ -68,7 +63,16 @@ def info_by_artist(artist):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument('-a', '--artist', dest="artist_name", help="Artist Name (in quotes)")
+    parser.add_argument('-d', '--directory', dest="directory", help="Directory location of spotify files")
     args = vars(parser.parse_args())
 
+    artist = ""
+    directory = ""
+
     artist = args["artist_name"]
-    info_by_artist(artist)
+    directory = args["directory"]
+
+    if (artist == None or directory == None):
+        print("Please provide artist name and directory location of files (-h option for usage help)")
+    else:
+        info_by_artist(artist, directory)
